@@ -118,3 +118,21 @@ screen = pygame.display.set_mode((852, 852))
 pygame.display.set_caption("Game of Life")
 clock = pygame.time.Clock()
 
+initial_state = random_state(50, 50)
+
+
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    draw_board(screen, initial_state)
+    next_state = next_board_state(initial_state)
+    initial_state = next_state
+
+
+    pygame.display.update()
+    clock.tick(15)
