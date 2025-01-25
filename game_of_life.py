@@ -97,8 +97,8 @@ def draw_board(screen, board):
 
     for i in range(h):
         for j in range(w):
-            x_coordinate = spacing * (j+1) + d * j
-            y_coordinate = spacing * (i+1) + d * i
+            x_coordinate = spacing * (j+1) + cell_side * j
+            y_coordinate = spacing * (i+1) + cell_side * i
             cell = pygame.Rect(x_coordinate, y_coordinate, cell_side, cell_side)
 
             if board[i][j] == 0:
@@ -117,5 +117,4 @@ pygame.init()
 screen = pygame.display.set_mode((852, 852))
 pygame.display.set_caption("Game of Life")
 clock = pygame.time.Clock()
-
 
