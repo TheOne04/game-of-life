@@ -87,3 +87,35 @@ def next_board_state(initial_state):
 
 
 
+# Functions for rendering as a GUI
+def draw_board(screen, board):
+    h = len(board)
+    w = len(board[0])
+
+    cell_side = 15
+    spacing = 2
+
+    for i in range(h):
+        for j in range(w):
+            x_coordinate = spacing * (j+1) + d * j
+            y_coordinate = spacing * (i+1) + d * i
+            cell = pygame.Rect(x_coordinate, y_coordinate, cell_side, cell_side)
+
+            if board[i][j] == 0:
+                pygame.draw.rect(screen, WHITE, cell)
+            else:
+                pygame.draw.rect(screen, BLUE, cell)
+
+
+
+# Color definitions
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BLUE = (0, 0, 255)
+
+pygame.init()
+screen = pygame.display.set_mode((852, 852))
+pygame.display.set_caption("Game of Life")
+clock = pygame.time.Clock()
+
+
