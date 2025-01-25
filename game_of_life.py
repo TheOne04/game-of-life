@@ -3,22 +3,20 @@ import sys
 import random
 
 
-
 def dead_state(w, h):
     board = []
 
     for i in range(h):
         row = [0 for i in range(w)]
-        
+
         board.append(row)
     return board
-            
 
 
 # Generate random board
 def random_state(w, h):
     board = []
-    
+
     for i in range(h):
         row = []
         for j in range(w):
@@ -27,31 +25,40 @@ def random_state(w, h):
                 cell = 0
             else:
                 cell = 1
-                
+
             row.append(cell)
         board.append(row)
     return board
+
 
 def lies_inside(board, point):
     row = point[0]
     col = point[1]
 
-    width = len(board[0])-1
-    height = len(board)-1
+    width = len(board[0]) - 1
+    height = len(board) - 1
 
     if (0 <= row <= height) and (0 <= col <= width):
         return True
     else:
         return False
-    
+
+
 def alive_neighbors(board, location):
     # all valid neighbors
 
     row = location[0]
     col = location[1]
-    neighbors = [(row-1, col-1), (row-1, col), (row-1, col+1),
-                 (row, col-1), (row, col+1),
-                 (row+1, col-1), (row+1, col), (row+1, col+1)]
+    neighbors = [
+        (row - 1, col - 1),
+        (row - 1, col),
+        (row - 1, col + 1),
+        (row, col - 1),
+        (row, col + 1),
+        (row + 1, col - 1),
+        (row + 1, col),
+        (row + 1, col + 1),
+    ]
 
     # check only valid ones, i.e. not negative and more than len-1
     count = 0
@@ -68,11 +75,11 @@ def alive_neighbors(board, location):
 def next_board_state(initial_state):
     w = len(initial_state[0])
     h = len(initial_state)
-    
+
     next_state = dead_state(w, h)
     for i in range(h):
         for j in range(w):
-            alive = alive_neighbors(initial_state, (i , j))
+            alive = alive_neighbors(initial_state, (i, j))
             if initial_state[i][j] == 1:
                 if alive < 2:
                     next_state[i][j] = 0
@@ -86,7 +93,6 @@ def next_board_state(initial_state):
     return next_state
 
 
-
 # Functions for rendering as a GUI
 def draw_board(screen, board):
     h = len(board)
@@ -97,15 +103,14 @@ def draw_board(screen, board):
 
     for i in range(h):
         for j in range(w):
-            x_coordinate = spacing * (j+1) + cell_side * j
-            y_coordinate = spacing * (i+1) + cell_side * i
+            x_coordinate = spacing * (j + 1) + cell_side * j
+            y_coordinate = spacing * (i + 1) + cell_side * i
             cell = pygame.Rect(x_coordinate, y_coordinate, cell_side, cell_side)
 
             if board[i][j] == 0:
                 pygame.draw.rect(screen, WHITE, cell)
             else:
                 pygame.draw.rect(screen, BLUE, cell)
-
 
 
 # Color definitions
@@ -121,8 +126,6 @@ clock = pygame.time.Clock()
 initial_state = random_state(50, 50)
 
 
-
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -132,7 +135,6 @@ while True:
     draw_board(screen, initial_state)
     next_state = next_board_state(initial_state)
     initial_state = next_state
-
 
     pygame.display.update()
     clock.tick(15)
